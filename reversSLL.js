@@ -12,12 +12,13 @@ class SLL{
         this.head = null;
     }
     add(val){
+        //var newNode = new Node(val) -- since new Node is returned in both cases might look a bit better to initialize it outside of if block
         if(!this.head){
             this.head = new Node(val);
             return this;
         }
         var current = this.head;
-        while(current){
+        while(current){ // maybe add current.next condition right here so that while loop breaks once you're at a node without a .next. at that point you can set next to new Node
             if(!current.next){
                 current.next = new Node(val);
                 return this;
@@ -25,7 +26,14 @@ class SLL{
                 current = current.next;
             }
         }
-        return this;
+        /*
+         * rewritten (allows you to evaluate a single boolean instead of 2): 
+         * while (current.next) {
+         *  current = current.next;
+         * }
+         * current.next = new Node(val);
+         */
+        return this; //nice touch!
     }
     print(){
         var current = this.head;
@@ -39,7 +47,7 @@ class SLL{
             values.push(current.val);
             current = current.next;
         }
-        console.log(values.join(' ==> '));
+        console.log(values.join(' ==> ')); //was wondering how you generated such beautiful single-line output
     }
     //first attempt
     reverseList(){
@@ -66,13 +74,13 @@ class SLL{
     }
     //revised second attempt
     newReverse(){
-        if(!this.head.next){
+        if(!this.head.next){ //don't forget to tackle the this.head = null case ie when linkedlist is empty;
             return this;
         }
         var c = this.head.next;
         var b = this.head
         var a = null;
-        if(!c.next){
+        if(!c.next){ 
             b.next = null;
             c.next = b;
             this.head = c;
