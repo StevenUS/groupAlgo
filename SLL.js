@@ -1,54 +1,52 @@
 "use strict";
 
-class Node{
+class Node {
     constructor(val){
         this.val = val;
         this.next = null;
     }
 }
 
-class SLL{
+class SLL {
+
     constructor(){
         this.head = null;
     }
+
     add(val){
-        if(!this.head){
+        if (!this.head) {
             this.head = new Node(val);
-            return this;
-        }
-        var current = this.head;
-        while(current){
-            if(!current.next){
-                current.next = new Node(val);
-                return this;
-            }else{
+        }else {
+            var current = this.head;
+            while (current.next) {
                 current = current.next;
             }
+            current.next = new Node(val);
         }
         return this;
     }
+
     print(){
         var current = this.head;
-        if (!current)
-        {
+        if (!current) {
             return this;
         }
-
         var values = [];
-        while(current){
+        while (current) {
             values.push(current.val);
             current = current.next;
         }
         console.log(values.join(' ==> '));
     }
+
     //first attempt
     reverseList(){
         var current = this.head;
         var prev = null;
         var pointer = null;
         var flag = true;
-        while(current){
-            if(!current.next){
+        while (current) {
+            if (!current.next) {
                 current.next = prev;
                 prev.next = null;
                 if(flag){
@@ -64,25 +62,26 @@ class SLL{
         this.head = pointer;
         return this;
     }
+
     //revised second attempt
     newReverse(){
-        if(!this.head.next){
+        if (!this.head.next) {
             return this;
         }
         var c = this.head.next;
         var b = this.head
         var a = null;
-        if(!c.next){
-            b.next = null;
-            c.next = b;
-            this.head = c;
-            return this;
-        }
+        // if (!c.next) {
+        //     b.next = null;
+        //     c.next = b;
+        //     this.head = c;
+        //     return this;
+        // }
         b.next = null;
-        while(b){
+        while (b) {
             a = b;
             b = c;
-            if(b == null){
+            if (b == null) {
                 break;
             }
             c = c.next;
@@ -91,9 +90,10 @@ class SLL{
         this.head = a;
         return this;
     }
+
     //detects if there is a loop in the node
     hasLoop(){
-        if(!this.head){
+        if (!this.head) {
             console.log("empty list");
             return false;
         }
@@ -102,20 +102,20 @@ class SLL{
             walker = this.head,
             anchor = this.head,
             flag   = false;
-        while(runner){
-            if(!runner.next || runner.next.next == undefined){
+        while (runner) {
+            if (!runner.next || runner.next.next == undefined) {
                 console.log("false");
                 return false;
             }
             runner = runner.next.next;
             walker = walker.next;
-            if(runner == walker){
+            if (runner == walker) {
                 if(flag){
                     anchor = anchor.next;
                 }
                 flag = true;
             }
-            if(anchor == walker){
+            if (anchor == walker) {
                 console.log("loopBegins = ", anchor.val);
                 return true;
             }
@@ -127,20 +127,21 @@ class SLL{
         console.log("false");
         return false;
     }
+
     //create a circular SLL where nodesBehind is the number of nodes from the end
     //where the next from the last node will be assigned.
     createLoop(nodesBehind){
-        if(!this.head || !this.head.next){
+        if (!this.head || !this.head.next) {
             console.log("cannot create loop with empty list or list with one node");
             return;
         }
         var current = this.head,
             length = 1;
-        while(current.next){
+        while (current.next) {
             current = current.next;
             length++;
         }
-        if(nodesBehind > length - 1){
+        if (nodesBehind > length - 1) {
             console.log("please choose a number less than", length - 1);
             return;
         }else{
@@ -160,7 +161,9 @@ class SLL{
 }
 
 var mySLL = new SLL();
-mySLL.add(1).add(2).add(3).add(4).add(5);
+mySLL.add(1).add(2);
 mySLL.print();
-mySLL.createLoop(2);
-mySLL.hasLoop();
+// mySLL.createLoop(2);
+// mySLL.hasLoop();
+mySLL.newReverse();
+mySLL.print();
