@@ -21,7 +21,6 @@ function findPrime(n){
     }
     console.log(primeArr);
     return primeArr;
-
 }
 
 console.log(findPrime(100).length);
