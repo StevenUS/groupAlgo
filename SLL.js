@@ -235,11 +235,15 @@ mySLL.print();
 //
 // mySLL.newMerge(newSLL)
 
-function moveMinToFront(anSLL) {
+function moveMinToFront(anSLL) { // After reading the function, I think a better name would be swapMinToFront or something like that
     var min = anSLL.head;
     var minPrev;
-    var current = anSLL.head.next;
+    var current = anSLL.head.next;    // what happens if anSLL is empty?
     var trailer = anSLL.head;
+    // you should start adding an empty line between blocks of code for readability
+    // good places are after all of your variable declarations, after if/while/for blocks, etc.
+    // there's no general rule, just be consistent
+
     while (current) {
         if (current.val < min.val) {
             min = current;
@@ -248,15 +252,17 @@ function moveMinToFront(anSLL) {
         current = current.next;
         trailer = trailer.next;
     }
+
+    // in this case, I think it would be better to negate this equality and "return this;" once
     if (min === anSLL.head) {
-        return this;
+        return this; // what is "this"?
     } else {
         minPrev.next = min.next;
         min.next = anSLL.head;
         anSLL.head = min;
     }
 
-    return this;
+    return this; // what is "this"?
 }
 
 moveMinToFront(mySLL);
