@@ -226,10 +226,39 @@ class SLL {
 }
 
 var mySLL = new SLL();
-var newSLL = new SLL();
+// var newSLL = new SLL();
 
-mySLL.add(1).add(3).add(12);
+mySLL.add(4).add(3).add(1).add(2).add(5);
+mySLL.print();
 
-newSLL.add(2).add(4).add(9);
+// newSLL.add(2).add(4).add(9);
+//
+// mySLL.newMerge(newSLL)
 
-mySLL.newMerge(newSLL)
+function moveMinToFront(anSLL) {
+    var min = anSLL.head;
+    var minPrev;
+    var current = anSLL.head.next;
+    var trailer = anSLL.head;
+    while (current) {
+        if (current.val < min.val) {
+            min = current;
+            minPrev = trailer;
+        }
+        current = current.next;
+        trailer = trailer.next;
+    }
+    if (min === anSLL.head) {
+        return this;
+    } else {
+        minPrev.next = min.next;
+        min.next = anSLL.head;
+        anSLL.head = min;
+    }
+
+    return this;
+}
+
+moveMinToFront(mySLL);
+moveMinToFront(mySLL);
+mySLL.print();
