@@ -158,12 +158,107 @@ class SLL {
             return this;
         }
     }
+
+    brokenMerge(SLL) {
+        var lowest,
+            p1 = this.head,
+            p2 = SLL.head;
+
+        //p2 < p1 ? this.head = p2 : this.head = p1;
+
+        while (p1 != null || p2 != null) { //can't figure out how to make this work
+            if (p1.val < p2.val) {
+                console.log(p1.val);
+                lowest = p1;
+                p1 = p1.next;
+                if (p1 != null) {
+                    if (p2.val > lowest.val && p2.val < p1.val) {
+                        lowest.next = p2;
+                    }
+                }
+            } else if (p2.val < p1.val) {
+                lowest = p2;
+                p2 = p2.next;
+                if (p1.val > lowest.val && p1.val < p2.val){
+                    lowest.next = p1;
+                }
+            } else {
+                lowest = p1;
+                p1 = p1.next;
+                lowest.next = p2;
+                lowest = p2;
+                p2 = p2.next;
+            }
+            if ( p1 == null || p2 == null) { //so i have this...
+                break;
+            }
+        }
+        this.print();
+    }
+
+    merge(SLL){
+        var jumper,
+            pointer1,
+            pointer2;
+
+        if (this.head.val < SLL.head.val) {
+            pointer1 = this.head;
+            pointer2 = SLL.head;
+        } else {
+            pointer1 = SLL.head;
+            pointer2 = this.head;
+        }
+
+        while (pointer1.next != null && pointer2 != null) {
+            if (pointer1.next.val <= pointer2.val) {
+                pointer1 = pointer1.next;
+            } else {
+                jumper = pointer1.next;
+                pointer1.next = pointer2;
+                pointer2 = jumper;
+            }
+        }
+        if (pointer1.next == null) {
+            pointer1.next = pointer2
+        }
+        this.print();
+    }
 }
 
 var mySLL = new SLL();
-mySLL.add(1).add(2);
+// var newSLL = new SLL();
+
+mySLL.add(4).add(3).add(1).add(2).add(5);
 mySLL.print();
-// mySLL.createLoop(2);
-// mySLL.hasLoop();
-mySLL.newReverse();
+
+// newSLL.add(2).add(4).add(9);
+//
+// mySLL.newMerge(newSLL)
+
+function moveMinToFront(anSLL) {
+    var min = anSLL.head;
+    var minPrev;
+    var current = anSLL.head.next;
+    var trailer = anSLL.head;
+    while (current) {
+        if (current.val < min.val) {
+            min = current;
+            minPrev = trailer;
+        }
+        current = current.next;
+        trailer = trailer.next;
+    }
+    if (min === anSLL.head) {
+        return this;
+    } else {
+        minPrev.next = min.next;
+        min.next = anSLL.head;
+        anSLL.head = min;
+    }
+
+    return this;
+}
+
+moveMinToFront(mySLL);
+moveMinToFront(mySLL);
 mySLL.print();
